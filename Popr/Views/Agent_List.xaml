@@ -1,0 +1,128 @@
+﻿<Window x:Class="Popr.Agent_List"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Popr"
+        mc:Ignorable="d"
+        Title="Agent_List"
+        MinHeight="260"
+        Height="450"
+        MaxHeight="830"
+        MinWidth="610"
+        Width="610"
+        MaxWidth="840"
+        Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style TargetType="ComboBox">
+            <Style.Setters>
+                <Setter Property="Width"
+                        Value="120"/>
+
+                <Setter Property="Margin"
+                        Value="10 0 0 0"/>
+            </Style.Setters>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="25 0 25 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <!--Верхняя часть-->
+        <StackPanel Orientation="Horizontal"
+                    Height="30"
+                    VerticalAlignment="Top"
+                    Margin="0 10 0 10">
+            
+            <TextBox Name="TBoxSearch"
+                     Text="Введите для поиска"
+                     Width="280"
+                     VerticalContentAlignment="Center"
+                     TextChanged="TBoxSearch_TextChanged"/>
+            
+            <ComboBox Name="ComboSort"
+                      SelectionChanged="ComboSort_SelectionChanged"/>
+
+            <ComboBox Name="ComboFiltration"
+                      DisplayMemberPath="Title"
+                      SelectionChanged="ComboBox_SelectionChanged"/>
+        </StackPanel>
+    
+        <!--Средняя часть-->
+        <ListView Grid.Row="1"
+                  x:Name="LVAgents"
+                  ScrollViewer.CanContentScroll="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="5"
+                          Width="auto"
+                          Height="auto">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Image Grid.Row="0"
+                               Width="100"
+                               Stretch="UniformToFill"
+                               HorizontalAlignment="Center">
+                            
+                            <Image.Source>
+                                <Binding Path="Logo">
+                                    <Binding.TargetNullValue>
+
+                                        <Image Source="C:\Users\user\source\repos\Popr\Popr\Resources\Images\DefaultPicture.png"
+                                               Width="100"/>
+                                        
+                                    </Binding.TargetNullValue>
+                                </Binding>
+                            </Image.Source>
+                        </Image>
+                        <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center"
+                                    Margin="15 0 0 0" HorizontalAlignment="Stretch">
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} | {1}">
+                                        <Binding Path="AgentType.Title"/>
+                                        <Binding Path="Title"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            
+                            <TextBlock Text="{Binding Priority, StringFormat={}{0} продаж за год}"/>
+                            <TextBlock Text="{Binding Phone, StringFormat={}+{0}}"/>
+                            <TextBlock Text="{Binding Priority, StringFormat={}Приоритетность: {0}}"/>
+                        </StackPanel>
+                        
+                        <TextBlock Grid.Column="2"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Right"
+                                   Text="10%"/>
+                        
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment"
+                            Value="Stretch"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+        
+        <!--Нижняя часть-->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 30 0 10">
+            <TextBlock Text="&lt;"/>
+            <TextBlock Text="1 " TextDecorations="Underline"/>
+            <TextBlock Text="2 "/>
+            <TextBlock Text="3 "/>
+            <TextBlock Text="4 "/>
+            <TextBlock Text="&gt;"/>
+        </StackPanel>
+    </Grid>
+</Window>
